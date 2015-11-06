@@ -3,7 +3,7 @@ data:extend(
   {
     type = "mining-tool",
     name = "staff-of-teleportation",
-    icon = "__staffs__/graphics/icons/staff_of_teleportation.png",
+    icon = "__staff-of-teleportation__/graphics/icons/staff_of_teleportation.png",
     flags = {"goes-to-quickbar"},
 	subgroup = "energy-pipe-distribution",
     damage = 0,
@@ -17,13 +17,13 @@ data:extend(
   {
     type = "container",
     name = "staff-of-teleportation",
-    icon = "__staffs__/graphics/icons/staff_of_teleportation.png",
+    icon = "__staff-of-teleportation__/graphics/icons/staff_of_teleportation.png",
     flags = {"placeable-neutral", "player-creation","placeable-off-grid"},
     max_health = 1000,
     inventory_size = 1,
     picture =
     {
-      filename = "__staffs__/graphics/icons/staff_of_teleportation.png",
+      filename = "__staff-of-teleportation__/graphics/icons/staff_of_teleportation.png",
       width = 32,
       height = 32,
       shift = {0, 0}
@@ -32,7 +32,7 @@ data:extend(
   {
     type = "item",
     name = "staff-of-teleportation-charge",
-    icon = "__staffs__/graphics/icons/staff_of_teleportation_charge.png",
+    icon = "__staff-of-teleportation__/graphics/icons/staff_of_teleportation_charge.png",
 	flags = {},
 	subgroup = "energy-pipe-distribution",
     order = "d-d",

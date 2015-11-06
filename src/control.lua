@@ -28,8 +28,8 @@ function moveFast(targetpos, player_index)
 	local startpos = player.position
 	local vector = deductPos(targetpos, startpos)
 	local magnitude = (vector.x^2+vector.y^2)^0.5
-	local max_magnitude = 0
-	player.print(magnitude)
+	local max_magnitude = 0.7
+
 	
 	if magnitude > max_magnitude then
 	
@@ -45,8 +45,6 @@ function moveFast(targetpos, player_index)
 	    vector.y = max_magnitude 
 	  end
 	end
-	player.print(vector.x)
-	player.print(vector.y)
 	
 	vector = {x=vector.x, y=vector.y}
 	local telepos = addPos(startpos,vector)
