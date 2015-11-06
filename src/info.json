@@ -1,10 +1,10 @@
 {
-  "name": "staffs",
+  "name": "staff-of-teleportation",
   "version": "0.0.1",
-  "title": "Staffs",
+  "title": "Staff of teleportation",
   "author": "Max",
-  "homepage": "",
+  "homepage": "https://github.com/maximusdominus/factorio-staffs",
   "contact": "",
-  "description": "Staff of teleportation, staff of...",
-  "dependencies": []
+  "description": "Staff of teleportation. Lets you teleport.",
+  "dependencies": ["base >= 0.12.10"]
 }
