@@ -12,7 +12,7 @@ data:extend(
     },
 	
     results = {
-	  {type = "item", name = "staff-of-teleportation", amount = 1}
+	  {type = "item", name = "staff-of-teleportation", amount = 2}
 	},
   },
   {
