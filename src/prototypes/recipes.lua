@@ -19,14 +19,14 @@ data:extend(
     type = "recipe",
     name = "staff-of-teleportation-charge",
     enabled = "true",
-    energy_required = 1,
+    energy_required = 0.2,
     ingredients =
     {
-      {"raw-wood", 5}
+      {"raw-wood", 1}
     },
 	
     results = {
-	  {type = "item", name = "staff-of-teleportation-charge", amount = 500}
+	  {type = "item", name = "staff-of-teleportation-charge", amount = 100}
 	},
   },
 }
