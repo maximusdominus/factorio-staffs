@@ -9,7 +9,7 @@ data:extend(
     damage = 0,
     durability = 1000,
     order = "d-c",
-    speed = 30,
+    speed = 4,
 	place_result = "staff-of-teleportation",
     stack_size = 100,
 	enabled = true
