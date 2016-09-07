@@ -1,22 +1,23 @@
-require "defines"
-require "util"
+if not sot then sot = {} end
+if not sot.config then sot.config = {} end
+
+require("config")
 
 function onputitem(event)
   if isHolding("staff-of-teleportation", event.player_index) then
- 
-	local player = game.players[event.player_index]
-	local cursor_stack = player.cursor_stack
-	
-	if cursor_stack.valid_for_read and cursor_stack.can_set_stack then
-	  cursor_stack.set_stack({name="staff-of-teleportation", count=10})
-	  setNextPosition(event.position, event.player_index)
-	end
+  	local player = game.players[event.player_index]
+  	local cursor_stack = player.cursor_stack
+
+  	if cursor_stack.valid_for_read and cursor_stack.can_set_stack then
+  	  cursor_stack.set_stack({name="staff-of-teleportation", count=10})
+  	  setNextPosition(event.position, event.player_index)
+  	end
   end
 end
 
 function onbuiltentity(event)
   if event.created_entity.name == "staff-of-teleportation" then
-	event.created_entity.destroy()	
+	  event.created_entity.destroy()
     return
   end
 end
@@ -26,25 +27,26 @@ function moveFast(targetpos, player_index)
 	local startpos = player.position
 	local vector = deductPos(targetpos, startpos)
 	local magnitude = (vector.x^2+vector.y^2)^0.5
-	local max_magnitude = 10
+  local max_magnitude = sot.config.max_magnitude
+  local scale = max_magnitude / magnitude
 
-	
-	if magnitude > max_magnitude then
-	
-	  if vector.x < 0 then
-	    vector.x = max_magnitude * -1.0
-	  else
-	    vector.x = max_magnitude 
-	  end
-	
-	  if vector.y < 0 then
-	    vector.y = max_magnitude * -1.0
-	  else
-	    vector.y = max_magnitude 
-	  end
+  -- uniformly scale the vector down so that we can only move the character
+  -- a maximum distance each hop
+  if magnitude > max_magnitude then
+	  vector = {x=(vector.x * scale), y=(vector.y * scale)}
 	end
-	
-	vector = {x=vector.x, y=vector.y}
+
+  -- scale everything down by how far away they clicked from the character
+  -- cap the zone of control to a distance of 50
+  local speed_magnitude = magnitude
+  local speed_magnitude_max = sot.config.speed_magnitude_max
+
+  if speed_magnitude > speed_magnitude_max then
+    speed_magnitude = speed_magnitude_max
+  end
+  local speed_scale = speed_magnitude / speed_magnitude_max
+  vector = {x=(vector.x * speed_scale), y=(vector.y * speed_scale)}
+
 	local telepos = addPos(startpos,vector)
 	player.teleport(telepos)
 end
@@ -74,60 +76,63 @@ function isHolding(item_name, player_index)
   return false
 end
 
-function initGlob()
-  if glob == nil then 
-    glob = {} 
-	glob.players = {}
-	return true
-  end
-  
-  return false
+function initGlobal()
+  if not global then global = {} end
+  if not global.sot then global.sot = {} end
+  if not global.sot.players then global.sot.players = {} end
 end
 
 function setNextPosition(position, player_index)
-  initGlob()
-  if not glob.players[player_index] then glob.players[player_index] = {} end
-  glob.players[player_index].next_position = position
+  initGlobal()
+  if not global.sot.players[player_index] then global.sot.players[player_index] = {} end
+  global.sot.players[player_index].next_position = position
 end
 
 function removeStaffCharge(player_index)
   local player = game.players[player_index]
-  local charges = player.get_inventory(1).get_item_count("staff-of-teleportation-charge")
-  if charges > 0 then
-    player.get_inventory(1).remove({name = "staff-of-teleportation-charge", count = 1})
-    return true
-  else 
-    return false
-  end	
+
+  local inv_charges = player.get_inventory(1).get_item_count("staff-of-teleportation-charge")
+  local bar_charges = player.get_quickbar().get_item_count("staff-of-teleportation-charge")
+  local inv = false
+  if inv_charges > 0 then
+      inv = player.get_inventory(1)
+  else
+    if bar_charges > 0 then
+      inv = player.get_quickbar()
+    end
+  end
+
+  if not inv then return false end
+
+  inv.remove({name = "staff-of-teleportation-charge", count=1})
+  return true
 end
 
 function teleportPlayer(player_index)
-  if game.tick % 15 > 0 then return false end
-  if initGlob() then return false end
+  if game.tick % sot.config.tick_rate > 0 then return false end
+  initGlobal()
 
-  if glob.players[player_index] == nil then 
-    glob.players[player_index] = {}
-	return false
+  if global.sot.players[player_index] == nil then
+    global.sot.players[player_index] = {}
+	  return false
   end
-  
-  
-  local next_position = glob.players[player_index].next_position
+
+  local next_position = global.sot.players[player_index].next_position
   if next_position == nil then return false end
- 
+
   if removeStaffCharge(player_index) then
-	moveFast(next_position, player_index)
-	glob.players[player_index].next_position = nil
-  end	
+	  moveFast(next_position, player_index)
+	  global.sot.players[player_index].next_position = nil
+  end
 end
 
 
 function ontick(event)
-  for player_index,player in ipairs(game.players) do
-    teleportPlayer(player_index)
+  for _, player in pairs(game.players) do
+     teleportPlayer(player.index)
   end
 end
 
-game.on_event(defines.events.on_tick, ontick)
-game.on_event(defines.events.on_put_item, onputitem)
-game.on_event(defines.events.on_built_entity, onbuiltentity)
-game.on_event(defines.events.on_tick, ontick)
+script.on_event(defines.events.on_put_item, onputitem)
+script.on_event(defines.events.on_built_entity, onbuiltentity)
+script.on_event(defines.events.on_tick, ontick)

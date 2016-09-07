@@ -1,6 +1,6 @@
 data:extend(
-{ 
-  
+{
+
   {
     type = "recipe",
     name = "staff-of-teleportation",
@@ -10,10 +10,9 @@ data:extend(
     {
       {"raw-wood", 100}
     },
-	
-    results = {
-	  {type = "item", name = "staff-of-teleportation", amount = 10}
-	},
+
+    result_count = 10,
+    result = "staff-of-teleportation"
   },
   {
     type = "recipe",
@@ -24,13 +23,9 @@ data:extend(
     {
       {"raw-wood", 1}
     },
-	
-    results = {
-	  {type = "item", name = "staff-of-teleportation-charge", amount = 25}
-	},
+
+    result_count = 500,
+    result = "staff-of-teleportation-charge"
   },
 }
 )
-
-
-

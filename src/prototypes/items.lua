@@ -5,14 +5,14 @@ data:extend(
     name = "staff-of-teleportation",
     icon = "__staff-of-teleportation__/graphics/icons/staff_of_teleportation.png",
     flags = {"goes-to-quickbar"},
-	subgroup = "energy-pipe-distribution",
+	  subgroup = "energy-pipe-distribution",
     damage = 0,
     durability = 1000,
     order = "d-c",
     speed = 4,
-	place_result = "staff-of-teleportation",
+	  place_result = "staff-of-teleportation",
     stack_size = 100,
-	enabled = true
+	  enabled = true
   },
   {
     type = "container",
@@ -33,13 +33,11 @@ data:extend(
     type = "item",
     name = "staff-of-teleportation-charge",
     icon = "__staff-of-teleportation__/graphics/icons/staff_of_teleportation_charge.png",
-	flags = {},
-	subgroup = "energy-pipe-distribution",
+	  flags = {},
+	  subgroup = "energy-pipe-distribution",
     order = "d-d",
     stack_size = 100000,
-	enabled = true
+	  enabled = true
   },
 }
 )
-
-
