@@ -1,11 +1,11 @@
 {
   "name": "staff-of-teleportation",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "title": "Staff of teleportation",
   "author": "Max LaRue, Lane LaRue",
   "homepage": "https://github.com/maximusdominus/factorio-staffs",
   "contact": "",
   "description": "Staff of teleportation. Lets you teleport.",
-	"factorio_version": "0.14.3",
+	"factorio_version": "0.14",
   "dependencies": ["base >= 0.14.0"]
 }
