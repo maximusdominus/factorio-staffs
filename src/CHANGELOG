@@ -1,0 +1,16 @@
+0.0.6
+- prevent teleporting inside of objects and water
+
+0.0.5
+- add 14.0.x compatibility
+
+0.0.4
+- add config.lua, adjustable teleport rate and speed
+- when teleporting, moving the cursor towards/away from the player will decrease/increase speed
+- charges now delplete from the quick bar as well as the inventory
+- code cleanup
+
+0.0.3
+- fix invalid-stack bug
+- updated icons
+- throttle teleport rate
